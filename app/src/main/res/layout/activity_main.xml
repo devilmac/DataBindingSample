@@ -11,8 +11,8 @@
             type="com.colanton.federico.databindingsample.presenter.MainPresenter"/>
 
         <variable
-            name="user"
-            type="com.colanton.federico.databindingsample.model.User"/>
+            name="bindingFields"
+            type="com.colanton.federico.databindingsample.model.BindingFields"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -25,6 +25,7 @@
             android:id="@+id/helloWorld"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -37,7 +38,7 @@
             android:layout_height="wrap_content"
             android:onClick="@{presenter::clickButton}"
             android:text="Click me"
-            android:visibility="@{user.isLoaded}"
+            android:visibility="@{bindingFields.isLoaded}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/helloWorld"
@@ -46,7 +47,7 @@
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{!user.isLoaded}"
+            android:visibility="@{!bindingFields.isLoaded}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/helloWorld"

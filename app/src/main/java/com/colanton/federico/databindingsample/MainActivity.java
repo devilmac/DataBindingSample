@@ -7,21 +7,18 @@ import android.support.annotation.NonNull;
 import android.text.Editable;
 
 import com.colanton.federico.databindingsample.databinding.ActivityMainBinding;
-import com.colanton.federico.databindingsample.model.User;
+import com.colanton.federico.databindingsample.model.BindingFields;
 import com.colanton.federico.databindingsample.presenter.MainPresenter;
 import com.colanton.federico.databindingsample.view.MainView;
+import com.colantoni.federico.networklibrary.NetworkConnection;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
-
-import java.util.Locale;
 
 
 public class MainActivity extends MvpActivity<MainView, MainPresenter> implements MainView {
 
-    private static final String S = "Hello world! My name is %s";
-
     private ActivityMainBinding binding;
 
-    private User user = new User();
+    private BindingFields bindingFields = new BindingFields();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +26,9 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        binding.setUser(user);
+        NetworkConnection.setBaseUrl(BuildConfig.BASE_URL);
+
+        binding.setBindingFields(bindingFields);
         binding.setPresenter(getPresenter());
     }
 
@@ -37,12 +36,12 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     @Override
     public MainPresenter createPresenter() {
 
-        return new MainPresenter(user);
+        return new MainPresenter(bindingFields);
     }
 
     @Override
     public void updateTextView(Editable text) {
 
-        binding.helloWorld.setText(String.format(Locale.getDefault(), S, text));
+        binding.helloWorld.setText(text);
     }
 }
