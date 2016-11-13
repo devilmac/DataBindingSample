@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.colanton.federico.databindingsample.presenter.MainPresenter"/>
+
+        <variable
+            name="user"
+            type="com.colanton.federico.databindingsample.model.User"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.colanton.federico.databindingsample.MainActivity">
+
+        <TextView
+            android:id="@+id/helloWorld"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="hello World!"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/clickMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{presenter::clickButton}"
+            android:text="Click me"
+            android:visibility="@{user.isLoaded}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/helloWorld"
+            tools:visibility="visible"/>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{!user.isLoaded}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/helloWorld"
+            tools:visibility="gone"/>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
