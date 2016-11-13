@@ -1,4 +1,4 @@
-package com.colanton.federico.databindingsample;
+package com.colantoni.federico.databindingsample;
 
 
 import android.databinding.DataBindingUtil;
@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 
-import com.colanton.federico.databindingsample.databinding.ActivityMainBinding;
-import com.colanton.federico.databindingsample.model.BindingFields;
-import com.colanton.federico.databindingsample.presenter.MainPresenter;
-import com.colanton.federico.databindingsample.view.MainView;
+import com.colantoni.federico.databindingsample.databinding.ActivityMainBinding;
+import com.colantoni.federico.databindingsample.model.BindingFields;
+import com.colantoni.federico.databindingsample.presenter.MainPresenter;
+import com.colantoni.federico.databindingsample.view.MainView;
 import com.colantoni.federico.networklibrary.NetworkConnection;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
@@ -24,7 +24,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, com.colantoni.federico.databindingsample.R.layout.activity_main);
 
         NetworkConnection.setBaseUrl(BuildConfig.BASE_URL);
 

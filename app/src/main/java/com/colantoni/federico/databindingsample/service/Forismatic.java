@@ -1,10 +1,10 @@
-package com.colanton.federico.databindingsample.service;
+package com.colantoni.federico.databindingsample.service;
 
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.colanton.federico.databindingsample.service.response.ForismaticGetQuoteResponse;
+import com.colantoni.federico.databindingsample.service.response.ForismaticGetQuoteResponse;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;

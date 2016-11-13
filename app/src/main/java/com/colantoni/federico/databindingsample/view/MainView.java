@@ -1,4 +1,4 @@
-package com.colanton.federico.databindingsample.view;
+package com.colantoni.federico.databindingsample.view;
 
 
 import android.text.Editable;

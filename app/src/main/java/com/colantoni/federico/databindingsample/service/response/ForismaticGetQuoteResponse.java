@@ -1,4 +1,4 @@
-package com.colanton.federico.databindingsample.service.response;
+package com.colantoni.federico.databindingsample.service.response;
 
 
 import android.os.Parcel;

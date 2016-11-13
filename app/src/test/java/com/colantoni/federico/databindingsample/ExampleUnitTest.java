@@ -1,4 +1,4 @@
-package com.colanton.federico.databindingsample;
+package com.colantoni.federico.databindingsample;
 
 
 import org.junit.Test;

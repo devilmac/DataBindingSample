@@ -1,4 +1,4 @@
-package com.colanton.federico.databindingsample.util;
+package com.colantoni.federico.databindingsample.util;
 
 
 import android.databinding.BindingConversion;

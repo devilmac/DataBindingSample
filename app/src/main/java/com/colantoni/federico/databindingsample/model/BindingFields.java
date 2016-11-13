@@ -1,4 +1,4 @@
-package com.colanton.federico.databindingsample.model;
+package com.colantoni.federico.databindingsample.model;
 
 
 import android.databinding.BaseObservable;
@@ -9,11 +9,12 @@ public class BindingFields extends BaseObservable {
 
     public final ObservableBoolean isLoaded = new ObservableBoolean(true);
 
-    public final ObservableBoolean isButtonVisible = new ObservableBoolean();
+    public final ObservableBoolean isButtonVisible = new ObservableBoolean(true);
 
     public void changeButtonVisibility() {
 
         isButtonVisible.set(!isButtonVisible.get());
+        isLoaded.set(false);
     }
 
     public void dataIsLoaded() {
