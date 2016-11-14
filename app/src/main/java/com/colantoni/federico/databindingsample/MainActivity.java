@@ -4,8 +4,13 @@ package com.colantoni.federico.databindingsample;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.view.View;
+import android.view.ViewGroup;
 
+import com.colantoni.federico.databindingsample.adapter.QuoteViewHolder;
 import com.colantoni.federico.databindingsample.databinding.ActivityMainBinding;
 import com.colantoni.federico.databindingsample.model.BindingFields;
 import com.colantoni.federico.databindingsample.presenter.MainPresenter;
@@ -20,6 +25,37 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
 
     private BindingFields bindingFields = new BindingFields();
 
+    RecyclerView.Adapter<QuoteViewHolder> adapter = new RecyclerView.Adapter<QuoteViewHolder>() {
+
+        @Override
+        public QuoteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+            View v = getLayoutInflater().inflate(R.layout.quote_item_list_layout, parent, false);
+
+            return new QuoteViewHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(QuoteViewHolder holder, int position) {
+
+            String quote = bindingFields.getQuotes().get(position);
+
+            holder.getQuote().setText(quote);
+        }
+
+        @Override
+        public long getItemId(int position) {
+
+            return bindingFields.getQuotes().get(position).hashCode();
+        }
+
+        @Override
+        public int getItemCount() {
+
+            return bindingFields.getQuotes().size();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -30,6 +66,20 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
 
         binding.setBindingFields(bindingFields);
         binding.setPresenter(getPresenter());
+        binding.quoteEditText.setEnabled(false);
+
+        binding.saveQuote.setOnClickListener(view -> {
+
+            getPresenter().saveQuote(binding.quoteEditText.getText().toString(), bindingFields.getQuotes());
+
+            adapter.notifyDataSetChanged();
+        });
+
+        adapter.setHasStableIds(true);
+
+        RecyclerView quoteList = binding.quoteList;
+        quoteList.setAdapter(adapter);
+        quoteList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
 
     @NonNull
@@ -40,8 +90,8 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     }
 
     @Override
-    public void updateTextView(Editable text) {
+    public void updateSelectedQuote(Editable text) {
 
-        binding.helloWorld.setText(text);
+        binding.quoteEditText.setText(text);
     }
 }

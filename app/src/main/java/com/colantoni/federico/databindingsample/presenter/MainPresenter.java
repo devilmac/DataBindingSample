@@ -1,6 +1,7 @@
 package com.colantoni.federico.databindingsample.presenter;
 
 
+import android.databinding.ObservableArrayList;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.Toast;
@@ -28,7 +29,7 @@ public class MainPresenter extends MvpNullObjectBasePresenter<MainView> {
         this.bindingFields = bindingFields;
     }
 
-    public void clickButton(View view) {
+    public void getRandomQuote(View view) {
 
         bindingFields.changeButtonVisibility();
 
@@ -36,6 +37,11 @@ public class MainPresenter extends MvpNullObjectBasePresenter<MainView> {
 
         Observable<ForismaticGetQuoteResponse> quoteResponseObservable = networkConnection.initializeServiceInstance(view.getContext(), Forismatic.class).getQuote("getQuote", "en", "json", new Random().nextInt(999999) + 1);
 
-        quoteResponseObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(forismaticGetQuoteResponse -> MainPresenter.this.getView().updateTextView(new SpannableStringBuilder(forismaticGetQuoteResponse.getQuoteText())), throwable -> Toast.makeText(view.getContext(), throwable.getMessage() != null ? throwable.getMessage() : "Network or API error", Toast.LENGTH_LONG).show(), () -> bindingFields.dataIsLoaded());
+        quoteResponseObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(forismaticGetQuoteResponse -> MainPresenter.this.getView().updateSelectedQuote(new SpannableStringBuilder(forismaticGetQuoteResponse.getQuoteText())), throwable -> Toast.makeText(view.getContext(), throwable.getMessage() != null ? throwable.getMessage() : "Network or API error", Toast.LENGTH_LONG).show(), () -> bindingFields.dataIsLoaded());
+    }
+
+    public void saveQuote(String quote, ObservableArrayList<String> quotes) {
+
+        quotes.add(quote);
     }
 }

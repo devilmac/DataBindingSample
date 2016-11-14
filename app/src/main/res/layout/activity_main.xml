@@ -15,43 +15,83 @@
             type="com.colantoni.federico.databindingsample.model.BindingFields"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <RelativeLayout
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.colantoni.federico.databindingsample.MainActivity">
 
-        <TextView
-            android:id="@+id/helloWorld"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/quoteEditText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="hello World!"/>
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="monospace"
+            android:textColor="@android:color/black"
+            tools:ignore="UnusedAttribute"
+            tools:text="This is a quote"/>
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/clickMe"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/buttons"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{presenter::clickButton}"
-            android:text="Click me"
-            android:visibility="@{bindingFields.isButtonVisible}"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/helloWorld"
-            tools:visibility="visible"/>
+            android:layout_below="@id/quoteEditText"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp">
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="@{!bindingFields.isLoaded}"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/helloWorld"
-            tools:visibility="gone"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
-    </android.support.constraint.ConstraintLayout>
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/getQuote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:onClick="@{presenter::getRandomQuote}"
+                    android:text="Get quote"
+                    android:visibility="@{bindingFields.isButtonVisible}"
+                    tools:visibility="visible"/>
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="@{!bindingFields.isLoaded}"
+                    app:layout_constraintTop_toBottomOf="@+id/quoteEditText"
+                    tools:visibility="visible"/>
+            </FrameLayout>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/saveQuote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Save quote"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/quoteEditText"/>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/quoteList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/buttons"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp"/>
+    </RelativeLayout>
 </layout>
