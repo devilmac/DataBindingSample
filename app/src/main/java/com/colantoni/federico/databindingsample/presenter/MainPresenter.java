@@ -2,11 +2,11 @@ package com.colantoni.federico.databindingsample.presenter;
 
 
 import android.databinding.ObservableArrayList;
-import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.Toast;
 
 import com.colantoni.federico.databindingsample.model.BindingFields;
+import com.colantoni.federico.databindingsample.model.Quote;
 import com.colantoni.federico.databindingsample.service.Forismatic;
 import com.colantoni.federico.databindingsample.service.response.ForismaticGetQuoteResponse;
 import com.colantoni.federico.databindingsample.view.MainView;
@@ -35,12 +35,18 @@ public class MainPresenter extends MvpNullObjectBasePresenter<MainView> {
 
         NetworkConnection networkConnection = NetworkConnection.getInstance();
 
-        Observable<ForismaticGetQuoteResponse> quoteResponseObservable = networkConnection.initializeServiceInstance(view.getContext(), Forismatic.class).getQuote("getQuote", "en", "json", new Random().nextInt(999999) + 1);
+        Observable<ForismaticGetQuoteResponse> quoteResponseObservable =
+                networkConnection.initializeServiceInstance(view.getContext(), Forismatic.class).getQuote("getQuote", "en", "json", new Random().nextInt(999999) + 1);
 
-        quoteResponseObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(forismaticGetQuoteResponse -> MainPresenter.this.getView().updateSelectedQuote(new SpannableStringBuilder(forismaticGetQuoteResponse.getQuoteText())), throwable -> Toast.makeText(view.getContext(), throwable.getMessage() != null ? throwable.getMessage() : "Network or API error", Toast.LENGTH_LONG).show(), () -> bindingFields.dataIsLoaded());
+        quoteResponseObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                               .map(forismaticGetQuoteResponse -> new Quote(forismaticGetQuoteResponse.getQuoteAuthor(), forismaticGetQuoteResponse.getQuoteText()))
+                               .subscribe(quote -> MainPresenter.this.getView().updateSelectedQuote(quote), throwable -> {
+                                   String error = throwable.getMessage() != null ? throwable.getMessage() : "Network or API error";
+                                   Toast.makeText(view.getContext(), error, Toast.LENGTH_LONG).show();
+                               }, () -> bindingFields.dataIsLoaded());
     }
 
-    public void saveQuote(String quote, ObservableArrayList<String> quotes) {
+    public void saveQuote(Quote quote, ObservableArrayList<Quote> quotes) {
 
         quotes.add(quote);
     }

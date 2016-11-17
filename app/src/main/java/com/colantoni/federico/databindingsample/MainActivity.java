@@ -6,13 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.colantoni.federico.databindingsample.adapter.QuoteViewHolder;
 import com.colantoni.federico.databindingsample.databinding.ActivityMainBinding;
 import com.colantoni.federico.databindingsample.model.BindingFields;
+import com.colantoni.federico.databindingsample.model.Quote;
 import com.colantoni.federico.databindingsample.presenter.MainPresenter;
 import com.colantoni.federico.databindingsample.view.MainView;
 import com.colantoni.federico.networklibrary.NetworkConnection;
@@ -38,9 +38,10 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
         @Override
         public void onBindViewHolder(QuoteViewHolder holder, int position) {
 
-            String quote = bindingFields.getQuotes().get(position);
+            Quote quote = bindingFields.getQuotes().get(position);
 
-            holder.getQuote().setText(quote);
+            holder.getBinding().setVariable(BR.quote, quote);
+            holder.getBinding().executePendingBindings();
         }
 
         @Override
@@ -68,13 +69,6 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
         binding.setPresenter(getPresenter());
         binding.quoteEditText.setEnabled(false);
 
-        binding.saveQuote.setOnClickListener(view -> {
-
-            getPresenter().saveQuote(binding.quoteEditText.getText().toString(), bindingFields.getQuotes());
-
-            adapter.notifyDataSetChanged();
-        });
-
         adapter.setHasStableIds(true);
 
         RecyclerView quoteList = binding.quoteList;
@@ -90,8 +84,10 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     }
 
     @Override
-    public void updateSelectedQuote(Editable text) {
+    public void updateSelectedQuote(Quote quote) {
 
-        binding.quoteEditText.setText(text);
+        binding.quoteEditText.setText(quote.getTextQuote());
+
+        getPresenter().saveQuote(quote, bindingFields.getQuotes());
     }
 }

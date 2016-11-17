@@ -12,9 +12,9 @@ public class BindingFields extends BaseObservable {
 
     public final ObservableBoolean isButtonVisible = new ObservableBoolean(true);
 
-    private final ObservableArrayList<String> quotes = new ObservableArrayList<>();
+    private final ObservableArrayList<Quote> quotes = new ObservableArrayList<>();
 
-    public ObservableArrayList<String> getQuotes() {
+    public ObservableArrayList<Quote> getQuotes() {
 
         return quotes;
     }
