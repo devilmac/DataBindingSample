@@ -30,10 +30,12 @@
             android:layout_marginRight="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:ellipsize="end"
             android:fontFamily="monospace"
+            android:hint="Click \'get quote\' to download a quote"
+            android:lines="2"
             android:textColor="@android:color/black"
-            tools:ignore="UnusedAttribute"
-            tools:text="This is a quote"/>
+            tools:ignore="UnusedAttribute"/>
 
         <FrameLayout
             android:id="@+id/buttons"
@@ -77,6 +79,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:clipToPadding="false"
+            android:overScrollMode="never"
             android:paddingBottom="16dp"
             tools:listitem="@layout/quote_item_list_layout"/>
     </RelativeLayout>
